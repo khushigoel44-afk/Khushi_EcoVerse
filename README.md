@@ -36,6 +36,7 @@ Shivangi Sharma — Backend Integration, MongoDB, Firebase Auth, Rewards Logic
 Harshit — Backend Integration, MongoDB, Firebase Sync, Rewards System
 
 Jatinder — Frontend Development, Scan Feature, Barcode Integration
+
 ---
 ## 📽️ Demo Video
 
