@@ -6,16 +6,45 @@ EcoVerse is a web application that helps users understand the environmental impa
 
 ## 🚀 Features
 
-- 🔐 **Google Authentication** (Firebase)
-- 📦 **Barcode Scanning** with real-time product detection
-- 🌱 **Carbon Footprint Estimation** per product
-- ♻️ **Recyclability Check** for packaging materials
-- 🧠 **Eco Points System** and **Monthly Rewards**
-- 🧾 **Dashboard** to track your scans, CO₂ savings & reward levels
-- 📊 **Leaderboard** to compare with the community
+- 🔐 **Google Authentication (Firebase)**
+  - Securely sign in using your Google account.
+  - Provides a smooth and protected authentication experience.
+
+- 📦 **Barcode Scanning**
+  - Scan product barcodes in real time using your device camera.
+  - Instantly identify products and retrieve sustainability-related information.
+
+- 🌱 **Carbon Footprint Estimation**
+  - Displays estimated carbon emissions associated with scanned products.
+  - Helps users make environmentally conscious purchasing decisions.
+
+- ♻️ **Recyclability Check**
+  - Determines whether product packaging can be recycled.
+  - Encourages responsible waste management and sustainable habits.
+
+- 🧠 **Eco Points System & Monthly Rewards**
+  - Earn points by performing eco-friendly activities.
+  - Track progress and unlock rewards through continued engagement.
+
+- 🧾 **Dashboard**
+  - Monitor scan history, carbon savings, and reward levels.
+  - Access all sustainability metrics from a single place.
+
+- 📊 **Leaderboard**
+  - Compare your eco-friendly impact with other users.
+  - Promotes community participation through friendly competition.
+
 - 🎨 **Dark/Light Theme Toggle**
-- 📈 **Analytics Page** for visual insights
+  - Switch between light and dark themes based on your preference.
+  - Enhances accessibility and viewing comfort.
+
+- 📈 **Analytics Page**
+  - Visualize sustainability trends through charts and insights.
+  - Helps users better understand their environmental impact over time.
+
 - 🔗 **Firebase–MongoDB Sync**
+  - Synchronizes application data between Firebase and MongoDB.
+  - Ensures reliable storage and consistent data management.
 
 ---
 
