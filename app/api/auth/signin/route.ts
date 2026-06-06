@@ -1,28 +1,50 @@
-import { NextResponse } from "next/server"
-import dbConnect from "@/lib/mongodb"
-import User from "@/models/User"
+import { NextResponse } from "next/server";
+import dbConnect from "@/lib/mongodb";
+import User from "@/models/User";
+import bcrypt from "bcryptjs";
 
 export async function POST(req: Request) {
   try {
-    await dbConnect()
+    await dbConnect();
 
-    const body = await req.json()
-    const { email } = body
+    const { email, password } = await req.json();
 
-    if (!email) {
-      return NextResponse.json(
-        { error: "Email is required" },
-        { status: 400 }
-      )
-    }
-
-    const user = await User.findOne({ email })
+    const user = await User.findOne({ email });
 
     if (!user) {
       return NextResponse.json(
         { error: "User not found" },
         { status: 404 }
-      )
+      );
+    }
+
+    if (!user.password) {
+  return NextResponse.json(
+    {
+      error:
+        "This account uses Google Sign-In. Please continue with Google.",
+    },
+    { status: 400 }
+  );
+}
+
+const isMatch = await bcrypt.compare(
+  password,
+  user.password
+);
+
+if (!isMatch) {
+  return NextResponse.json(
+    { error: "Invalid credentials" },
+    { status: 401 }
+  );
+}
+
+    if (!isMatch) {
+      return NextResponse.json(
+        { error: "Invalid credentials" },
+        { status: 401 }
+      );
     }
 
     const userData = {
@@ -34,16 +56,18 @@ export async function POST(req: Request) {
       joinedAt:
         user.createdAt?.toISOString().split("T")[0] ||
         new Date().toISOString().split("T")[0],
-    }
-
-    return NextResponse.json({ user: userData }, { status: 200 })
-  } catch (error) {
-    const message =
-      error instanceof Error ? error.message : "Unknown server error"
+    };
 
     return NextResponse.json(
-      { error: message },
+      { user: userData },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Signin error:", error);
+
+    return NextResponse.json(
+      { error: "Internal server error" },
       { status: 500 }
-    )
+    );
   }
 }

@@ -109,10 +109,7 @@ if (process.env.NODE_ENV !== "production") {
 // Cast to Model<any> to collapse the union type produced by the ternary.
 // Without this, TypeScript raises TS2349 ("not callable") on every
 // .findOne() / .create() / .find() call across all API routes.
-const User = (
-  process.env.NODE_ENV === "production"
-    ? mongoose.models.User || mongoose.model("User", UserSchema)
-    : mongoose.model("User", UserSchema)
-) as mongoose.Model<any>
+const User =
+  mongoose.models.User || mongoose.model("User", UserSchema)
 
 export default User

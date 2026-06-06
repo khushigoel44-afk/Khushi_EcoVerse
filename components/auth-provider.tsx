@@ -10,6 +10,7 @@ import {
 import {
   signInWithPopup,
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
   User as FirebaseUser
 } from "firebase/auth"
 import { auth, googleProvider } from "@/lib/firebase"
@@ -68,6 +69,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         body: JSON.stringify({
           name,
           email,
+          password,
           firebaseUid: userCredential.user.uid
         })
       })
@@ -110,28 +112,45 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  const login = async (email: string, password: string): Promise<boolean> => {
-    try {
-      const res = await fetch("/api/auth/signin", {
+   const login = async (email: string, password: string): Promise<boolean> => {
+     try {
+       // First authenticate with Firebase
+       const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+       password
+      )
+
+      // Get Firebase ID token
+     const token = await userCredential.user.getIdToken()
+
+      // Send verified token to backend
+     const res = await fetch("/api/auth/signin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password })
-      })
+        body: JSON.stringify({
+        email,
+        password,
+      }),
+    })
 
-      const data = await res.json()
+    const data = await res.json()
+
       if (res.ok) {
-        setUser(data.user)
-        localStorage.setItem("ecoverse-user", JSON.stringify(data.user))
-        return true
-      } else {
-        console.warn("❌ Login failed:", data.error)
-        return false
-      }
-    } catch (err) {
-      console.error("🔥 Login error:", err)
-      return false
+          setUser(data.user)
+          localStorage.setItem("ecoverse-user", JSON.stringify(data.user))
+           return true
+       }
+       else {
+      console.warn("❌ Login failed:", data.error)
+         return false
     }
+     } 
+  catch (err) {
+    console.error("🔥 Login error:", err)
+    return false
   }
+}
 
   const signInWithGoogle = async (): Promise<boolean> => {
     try {
