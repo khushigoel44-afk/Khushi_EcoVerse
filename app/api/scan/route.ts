@@ -79,6 +79,15 @@ export async function POST(req: Request) {
             ? { "points.confirmed": pointsEarned }
             : { "points.unconfirmed": pointsEarned })
         },
+        $push: {
+          scans: {
+            productName: product.product_name,
+            carbonEstimate: carbonEstimate,
+            category: carbonData.category,
+            confidence: carbonData.confidence,
+            barcode: barcode
+          }
+        },
         $set: {
           updatedAt: new Date()
         }
