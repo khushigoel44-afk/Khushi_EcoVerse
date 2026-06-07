@@ -26,7 +26,14 @@ type OpenFoodFactsResponse = {
 
 export async function POST(req: Request) {
   const { barcode } = await req.json()
-  const userEmail = req.headers.get("x-user-email") || "test@example.com" // ✅ Fallback to dev email if no JWT session exists
+  const userEmail = req.headers.get("x-user-email")
+
+  if (!userEmail) {
+    return NextResponse.json(
+      { error: "Unauthorized" },
+      { status: 401 }
+    )
+  } // ✅ Fallback to dev email if no JWT session exists
 
   if (!barcode) {
     return NextResponse.json({ error: "Barcode missing" }, { status: 400 })
@@ -146,9 +153,9 @@ export async function POST(req: Request) {
           monthlyBonus,
           sustainabilityTier:
             updatedUser.monthlyCarbon < 10 && updatedUser.totalScanned >= 15 ? 'Platinum' :
-            updatedUser.monthlyCarbon < 20 && updatedUser.totalScanned >= 10 ? 'Gold' :
-            updatedUser.monthlyCarbon < 30 && updatedUser.totalScanned >= 5 ? 'Silver' :
-            updatedUser.monthlyCarbon < 40 ? 'Bronze' : 'Beginner',
+              updatedUser.monthlyCarbon < 20 && updatedUser.totalScanned >= 10 ? 'Gold' :
+                updatedUser.monthlyCarbon < 30 && updatedUser.totalScanned >= 5 ? 'Silver' :
+                  updatedUser.monthlyCarbon < 40 ? 'Bronze' : 'Beginner',
           pendingConfirmationInfo: (() => {
             const confirmationData = confirmPendingPoints
               ? confirmPendingPoints(updatedUser)
@@ -156,9 +163,9 @@ export async function POST(req: Request) {
 
             return confirmationData.confirmedPoints > 0
               ? {
-                  pointsConfirmed: confirmationData.confirmedPoints,
-                  transactionsConfirmed: confirmationData.confirmedTransactions.length
-                }
+                pointsConfirmed: confirmationData.confirmedPoints,
+                transactionsConfirmed: confirmationData.confirmedTransactions.length
+              }
               : null
           })()
         }
