@@ -92,7 +92,8 @@ export async function POST(req: Request) {
             carbonEstimate: carbonEstimate,
             category: carbonData.category,
             confidence: carbonData.confidence,
-            barcode: barcode
+            barcode: barcode,
+            date: new Date()
           }
         },
         $set: {
