@@ -13,6 +13,7 @@ import { Leaf, Eye, EyeOff } from "lucide-react"
 import Link from "next/link"
 import { useToast } from "@/hooks/use-toast"
 import GoogleSignInButton from "@/components/google-signin-button"
+import Image from "next/image"
 
 export default function SignIn() {
   const [email, setEmail] = useState("")
@@ -56,14 +57,20 @@ export default function SignIn() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-[#0a0a0a] flex flex-col items-center justify-center p-4 sm:p-8">
       <div className="w-full max-w-[450px] bg-white dark:bg-[#111111] border border-gray-200 dark:border-gray-800 shadow-xl rounded-2xl overflow-hidden p-8 sm:p-10">
-        
+
         <div className="flex flex-col items-center justify-center space-y-3 mb-8">
           <Link href="/" className="flex items-center gap-2 transition-opacity hover:opacity-90">
-            <img src="/logo.png" alt="EcoVerse logo" className="h-10 w-auto" />
+            <Image
+              src="/logo.png"
+              alt="EcoVerse logo"
+              width={40}
+              height={40}
+              className="h-10 w-auto"
+            />
             <span className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">EcoVerse</span>
           </Link>
         </div>
-        
+
         <div className="flex flex-col space-y-2 text-center mb-8">
           <h1 className="text-2xl font-semibold tracking-tight text-gray-900 dark:text-gray-100">Welcome Back</h1>
           <p className="text-sm text-gray-500 dark:text-gray-400">
@@ -72,7 +79,7 @@ export default function SignIn() {
         </div>
 
         <GoogleSignInButton className="mb-6" />
-        
+
         <div className="relative mb-6">
           <div className="absolute inset-0 flex items-center">
             <span className="w-full border-t border-gray-200 dark:border-gray-800" />
@@ -113,6 +120,9 @@ export default function SignIn() {
               />
               <button
                 type="button"
+                aria-label={
+                  showPassword ? "Hide password" : "Show password"
+                }
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
               >
@@ -124,14 +134,14 @@ export default function SignIn() {
             {isLoading ? "Signing In..." : "Sign In"}
           </Button>
         </form>
-        
+
         <div className="mt-8 text-center text-sm">
           <span className="text-gray-500 dark:text-gray-400">{"Don't have an account? "}</span>
           <Link href="/auth/signup" className="text-green-600 dark:text-green-500 hover:underline font-medium transition-colors">
             Sign up
           </Link>
         </div>
-        
+
         <div className="mt-6 text-center">
           <Link href="/" className="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 hover:underline transition-colors">
             ← Back to home
