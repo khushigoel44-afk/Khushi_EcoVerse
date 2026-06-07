@@ -191,7 +191,7 @@ export async function POST(req: Request) {
         break
     }
 
-    // Execute atomic update with strict locks
+    // Execute atomic update - MongoDB guarantees single-document atomicity
     const updatedUser = await User.findOneAndUpdate(
       { 
         email, 
