@@ -362,7 +362,10 @@ npm install
 
 Create a `.env.local` file.
 
-You can obtain Firebase credentials from the [Firebase Console](https://console.firebase.google.com/) and MongoDB URI from your [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) cluster and [Gemini Api](https://aistudio.google.com/app/api-keys)
+You can obtain 
+- Firebase credentials from the [Firebase Console](https://console.firebase.google.com/)
+- MongoDB URI from your [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) cluster
+- [Gemini API](https://aistudio.google.com/app/api-keys)
 
 ```env
 # Firebase
