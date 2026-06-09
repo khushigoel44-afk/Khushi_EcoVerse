@@ -2,7 +2,7 @@
 
 ## 📺 Application Demo
 
-![EcoVerse Demo](./public/demo.gif)
+![EcoVerse Demo](img width="800" height="435" alt="demo" src="https://github.com/user-attachments/assets/e25a77cc-fa8f-4d5d-b521-1a64127da421" /)
 
 
 <p align="center">
