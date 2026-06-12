@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, useCallback } from "react"
+import { useEffect, useState, useCallback, useRef } from "react"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import { CheckCircle, Clock, Gift, Star, Trophy } from "lucide-react"
@@ -24,26 +24,51 @@ interface RewardsNotificationProps {
 
 export default function RewardsNotification({ notification, onDismiss }: RewardsNotificationProps) {
   const [visible, setVisible] = useState(false)
+  
+  // Refs to tracking timeouts and function dependencies safely across re-renders
+  const dismissTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const latestOnDismiss = useRef(onDismiss)
 
-  const handleDismiss = useCallback(() => {
-    setVisible(false)
-    setTimeout(() => {
-      onDismiss()
-    }, 300) // Wait for fade out animation
+  // Keep the ref updated with the fresh instance of onDismiss
+  useEffect(() => {
+    latestOnDismiss.current = onDismiss
   }, [onDismiss])
 
+  // Handles smooth dismissal by running animation first, then notifying the parent
+  const handleDismiss = useCallback(() => {
+    setVisible(false)
+    
+    if (dismissTimeoutRef.current) {
+      clearTimeout(dismissTimeoutRef.current)
+    }
+
+    dismissTimeoutRef.current = setTimeout(() => {
+      latestOnDismiss.current()
+      dismissTimeoutRef.current = null
+    }, 300) // Wait for fade out animation
+  }, [])
+
+  // Controls the 5-second auto-dismiss routine cleanly
   useEffect(() => {
     if (notification) {
       setVisible(true)
-      // Auto-dismiss after 5 seconds
+      
       const timer = setTimeout(() => {
         handleDismiss()
       }, 5000)
 
-      return () => clearTimeout(timer)
+      // Clear all timers on update or unexpected early unmounts
+      return () => {
+        clearTimeout(timer)
+        if (dismissTimeoutRef.current) {
+          clearTimeout(dismissTimeoutRef.current)
+          dismissTimeoutRef.current = null
+        }
+      }
     }
   }, [notification, handleDismiss])
 
+  // Changed guard clause to let the fade-out exit animation play smoothly
   if (!notification) return null
 
   const getIcon = () => {
@@ -149,22 +174,22 @@ export default function RewardsNotification({ notification, onDismiss }: Rewards
   )
 }
 
-// Hook for managing reward notifications
+// Hook for managing reward notifications (Now safely memoized via useCallback)
 export function useRewardsNotification() {
   const [notification, setNotification] = useState<RewardNotification | null>(null)
 
-  const showNotification = (notificationData: Omit<RewardNotification, 'id' | 'timestamp'>) => {
+  const showNotification = useCallback((notificationData: Omit<RewardNotification, 'id' | 'timestamp'>) => {
     const newNotification: RewardNotification = {
       ...notificationData,
       id: `${Date.now()}-${Math.random()}`,
       timestamp: new Date()
     }
     setNotification(newNotification)
-  }
+  }, [])
 
-  const dismissNotification = () => {
+  const dismissNotification = useCallback(() => {
     setNotification(null)
-  }
+  }, [])
 
   return {
     notification,
