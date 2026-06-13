@@ -1,7 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-import os
 import random
 
 def generate_synthetic_waste_data(num_samples=500):
@@ -50,8 +49,8 @@ def run_eda():
     print("\n📈 Generating visualizations...")
     sns.set_theme(style="whitegrid")
     
-    # Create a figure with 2 subplots
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+    # Create a figure with 2 subplots (Fix: replaced unused 'fig' with '_')
+    _, axes = plt.subplots(1, 2, figsize=(14, 6))
     
     # Plot 1: Count of Categories
     sns.countplot(data=df, x='Category', palette='viridis', ax=axes[0])
@@ -65,10 +64,14 @@ def run_eda():
     
     plt.tight_layout()
     
-    # Save the plot instead of requiring a GUI to show it
+    # Save the plot with error handling (Fix: added try/except block)
     output_file = 'waste_distribution_analysis.png'
-    plt.savefig(output_file, dpi=300)
-    print(f"✅ EDA complete! Visualization saved as '{output_file}' in the current directory.")
+    try:
+        plt.savefig(output_file, dpi=300)
+        print(f"✅ EDA complete! Visualization saved as '{output_file}' in the current directory.")
+    except (OSError, PermissionError) as e:
+        print(f"❌ Error: Failed to save visualization: {e}")
+        raise
 
 if __name__ == "__main__":
     run_eda()
