@@ -37,6 +37,7 @@ const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
           src={src}
           alt="User avatar"
           fill
+          sizes="40px"
           className="object-cover rounded-full"
         />
       </div>
