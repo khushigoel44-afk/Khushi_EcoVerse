@@ -617,8 +617,8 @@ export default function RewardsPage() {
                           {!canAfford && wouldAffordWithUnconfirmed && (
                             <div className="mb-3 p-2 rounded bg-yellow-900/20 border border-yellow-700">
                               <p className="text-xs text-yellow-300">
-                                You&apos;ll have enough once unconfirmed points are
-                                confirmed (7 days)
+                                You&apos;ll have enough once unconfirmed points
+                                are confirmed (7 days)
                               </p>
                             </div>
                           )}
