@@ -128,10 +128,7 @@ export default function BarcodeScanner({
           handleScan(barcode);
         }
       } catch (error) {
-        if (
-          !(error instanceof Error) ||
-          error.name !== 'NotFoundException'
-        ) {
+        if (!(error instanceof Error) || error.name !== 'NotFoundException') {
           toast({
             title: 'Scanning failed',
             description:

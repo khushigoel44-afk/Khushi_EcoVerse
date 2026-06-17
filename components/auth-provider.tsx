@@ -98,7 +98,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       localStorage.setItem('ecoverse-user', JSON.stringify(data.user));
       return true;
     } catch (err) {
-      if (err instanceof FirebaseError && err.code === 'auth/email-already-in-use') {
+      if (
+        err instanceof FirebaseError &&
+        err.code === 'auth/email-already-in-use'
+      ) {
         console.error('⚠️ Email already in use');
         toast({
           title: 'Email already registered',

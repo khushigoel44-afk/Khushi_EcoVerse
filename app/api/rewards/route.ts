@@ -125,9 +125,7 @@ export async function GET(req: Request) {
     const pointsSummary = getUserPointsSummary(user);
 
     // Get available achievements (not yet earned)
-    const earnedAchievementIds = (user.achievements || []).map(
-      (a) => a.id
-    );
+    const earnedAchievementIds = (user.achievements || []).map((a) => a.id);
     const availableAchievements = ACHIEVEMENTS.filter(
       (achievement) => !earnedAchievementIds.includes(achievement.id)
     );

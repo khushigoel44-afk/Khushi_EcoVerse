@@ -99,9 +99,7 @@ export default function RewardsPage() {
   const [rewardsData, setRewardsData] = useState<RewardsData | null>(null);
   const [loading, setLoading] = useState(true);
   const [purchasing, setPurchasing] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<RewardShopItem | null>(
-    null
-  );
+  const [selectedItem, setSelectedItem] = useState<RewardShopItem | null>(null);
 
   useEffect(() => {
     if (!user) {
