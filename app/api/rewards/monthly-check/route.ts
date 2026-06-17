@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/mongodb';
 import mongoose from 'mongoose';
 import User, { type IUser } from '@/models/User';
-import { calculateMonthlyBonus, POINT_REWARDS } from '@/lib/rewards-system';
+import { calculateMonthlyBonus } from '@/lib/rewards-system';
 
 type LeanUser = mongoose.FlattenMaps<IUser> & { _id: mongoose.Types.ObjectId };
 

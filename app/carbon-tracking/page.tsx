@@ -40,9 +40,7 @@ export default function CarbonTrackingPage() {
       if (!user?.email) return;
 
       try {
-        const res = await fetch(
-          `/api/user/score?email=${encodeURIComponent(user.email)}`
-        );
+        const res = await fetch('/api/user/score');
         if (res.ok) {
           const data = await res.json();
           setUserData(data);

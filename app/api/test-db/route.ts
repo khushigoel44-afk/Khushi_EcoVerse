@@ -3,7 +3,7 @@ import dbConnect from '@/lib/mongodb';
 
 export async function GET() {
   try {
-    console.log('🔍 Testing MongoDB connection...');
+    console.warn('🔍 Testing MongoDB connection...');
 
     // Test environment variable
     const mongoUri = process.env.MONGODB_URI;
@@ -17,14 +17,14 @@ export async function GET() {
       );
     }
 
-    console.log('✅ MONGODB_URI found');
+    console.warn('✅ MONGODB_URI found');
 
     // Test database connection
     const mongoose = await dbConnect();
 
-    console.log('✅ MongoDB connection successful!');
-    console.log('Connection state:', mongoose.connection.readyState);
-    console.log('Database name:', mongoose.connection.db?.databaseName);
+    console.warn('✅ MongoDB connection successful!');
+    console.warn('Connection state:', mongoose.connection.readyState);
+    console.warn('Database name:', mongoose.connection.db?.databaseName);
 
     return NextResponse.json({
       status: 'success',
@@ -41,6 +41,7 @@ export async function GET() {
       error instanceof Error
         ? (error as NodeJS.ErrnoException & { hostname?: string })
         : undefined;
+    const isDev = process.env.NODE_ENV !== 'production';
 
     const errorInfo: {
       status: string;
@@ -55,10 +56,10 @@ export async function GET() {
     } = {
       status: 'failed',
       error: message,
-      code: nodeError?.code,
-      errno: nodeError?.errno,
-      syscall: nodeError?.syscall,
-      hostname: nodeError?.hostname,
+      code: isDev ? nodeError?.code : undefined,
+      errno: isDev ? nodeError?.errno : undefined,
+      syscall: isDev ? nodeError?.syscall : undefined,
+      hostname: isDev ? nodeError?.hostname : undefined,
       timestamp: new Date().toISOString(),
     };
 

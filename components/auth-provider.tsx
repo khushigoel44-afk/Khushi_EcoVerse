@@ -93,7 +93,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return false;
       }
 
-      console.log('✅ Signup successful');
       setUser(data.user);
       localStorage.setItem('ecoverse-user', JSON.stringify(data.user));
       return true;
