@@ -441,7 +441,7 @@ To spin up the application in an isolated container without configuring local No
    cp .env.example .env
    ```
 
-   Note: Open the newly created .env file and populate it with your actual Firebase, MongoDB, and Gemini credentials before proceeding.
+   Note: Open the newly created .env file and populate it with your actual Firebase and Gemini credentials. The Docker Compose setup includes a local MongoDB container that automatically initializes with the Mongo credentials you provide in .env. You do not need to manually provision a MongoDB Atlas cluster for local development.
 
 2. Build and Start the Container:
 
